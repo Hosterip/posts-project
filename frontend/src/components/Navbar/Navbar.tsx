@@ -16,11 +16,17 @@ const Navbar = () => {
 
     return (
         <nav className='flex justify-between text-2xl text-slate-800 items-center h-14 bg-amber-50 '>
-            <NavbarButton to='/'>Posts</NavbarButton>
+            <div>
+                <NavbarButton to='/'>Posts</NavbarButton>
+                <NavbarButton to='/profiles'>Profiles</NavbarButton>
+            </div>
             <div>
                 {user
                     ?
-                    <button onClick={logoutHandler} className='h-fit mx-4 px-2 border-b-4 border-red-600'>Logout</button>
+                    <>
+                        <button onClick={logoutHandler} className='h-fit mx-4 px-2 border-b-4 border-red-600'>Logout</button>
+                        <NavbarButton to={`/profiles/${user.id}`}>Profile</NavbarButton>
+                    </>
                     :
                     <>
                         <NavbarButton to='/register'>Sign-up</NavbarButton>

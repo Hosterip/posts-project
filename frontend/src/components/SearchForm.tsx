@@ -3,9 +3,16 @@ import {FC, FormEvent} from 'react';
 interface IPostsFormProps {
     search: string
     setSearch: (value: string) => void
-    handleSearch: (e: FormEvent<HTMLFormElement | HTMLButtonElement>) => void
+    handleRequest: () => void
 }
-const SearchForm: FC<IPostsFormProps> = ({search, setSearch, handleSearch}) => {
+
+const SearchForm: FC<IPostsFormProps> = ({search, setSearch, handleRequest}) => {
+
+    const handleSearch = (e: FormEvent<HTMLFormElement | HTMLButtonElement>) => {
+        e.preventDefault()
+        handleRequest()
+    }
+
     return (
         <form onSubmit={handleSearch} className='rounded overflow-hidden w-8/12 my-4 mx-auto flex flex-nowrap'>
             <input
