@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+./backend/prisma/migratuibs
+./backend/prisma/dev.db
+
 .env
 
 # Editor directories and files
