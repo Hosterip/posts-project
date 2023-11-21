@@ -19,7 +19,7 @@ authRoutes.post('/register', (req, res) => {
     const {hash, salt} = genHashSalt(password)
     prisma.user.create({
         data: {
-            username,
+            username: username.toLowerCase(),
             hash,
             salt
         }

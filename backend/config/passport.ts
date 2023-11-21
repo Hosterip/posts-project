@@ -29,7 +29,7 @@ passport.use(new LocalStrategy({
 }, (username, password, done) => {
     prisma.user.findUnique({
         where: {
-            username
+            username: username.toLowerCase()
         }
     })
         .then(user => {

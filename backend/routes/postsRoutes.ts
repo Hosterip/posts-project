@@ -1,7 +1,6 @@
 import {PrismaClient} from "@prisma/client";
 import {isAuth} from "./authMiddleware";
 import express from "express";
-import {Request, Response} from 'express'
 const prisma = new PrismaClient();
 export const postsRoutes = express.Router()
 
@@ -49,14 +48,18 @@ postsRoutes.get('/:page', async (req,res) => {
         })
 })
 
-postsRoutes.post('/create', isAuth, async (req: Request, res: Response) => {
-    const { title, body, id } = req.body
-
+postsRoutes.post('/create', isAuth, async (req, res) => {
+    const { title, body } = req.body
+    console.log('BODY', req.body)
     // @ts-ignore
-    if(req.user?.id !== id) {
-        res.status(401)
+    const { id } = req.user
+    console.log('POST', title, body, id)
+    // @ts-ignore
+    if(typeof title !== 'string' || typeof body !== 'string') {
+        res.status(400);
         res.end()
-    } else if (!(title.trim() && body.trim())) {
+    }
+    if (!(title.trim() && body.trim())) {
         res.status(400)
         res.end()
     }
@@ -66,8 +69,11 @@ postsRoutes.post('/create', isAuth, async (req: Request, res: Response) => {
             title,
             body,
             author: {
-                connect: id
+                connect: {
+                    id
+                }
             }
         }
     })
+        .finally(() => res.end())
 })
