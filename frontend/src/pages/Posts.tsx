@@ -4,7 +4,7 @@ import {fetchPosts} from "../API/posts/fetchPosts.ts";
 import useInfinityScroll from "../hooks/useInfinityScroll.tsx"
 import PostList from "../components/Posts/PostList.tsx";
 import {IPost} from "../share/interfaces/IPost.ts";
-import PostsForm from "../components/Posts/PostsForm.tsx";
+import SearchForm from "../components/SearchForm.tsx";
 
 const Posts = () => {
     const {user} = useUserStore()
@@ -37,7 +37,7 @@ const Posts = () => {
     return (
         <div className='m-5'>
             {user && <h1 className='text-zinc-100 text-2xl font-bold'>Hello {user.username}!</h1>}
-            <PostsForm search={search} setSearch={setSearch} handleSearch={handleSearch}/>
+            <SearchForm search={search} setSearch={setSearch} handleSearch={handleSearch}/>
             <div>
                 {posts.length
                     ?

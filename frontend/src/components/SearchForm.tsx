@@ -5,7 +5,7 @@ interface IPostsFormProps {
     setSearch: (value: string) => void
     handleSearch: (e: FormEvent<HTMLFormElement | HTMLButtonElement>) => void
 }
-const PostsForm: FC<IPostsFormProps> = ({search, setSearch, handleSearch}) => {
+const SearchForm: FC<IPostsFormProps> = ({search, setSearch, handleSearch}) => {
     return (
         <form onSubmit={handleSearch} className='rounded overflow-hidden w-8/12 my-4 mx-auto flex flex-nowrap'>
             <input
@@ -24,4 +24,4 @@ const PostsForm: FC<IPostsFormProps> = ({search, setSearch, handleSearch}) => {
     );
 };
 
-export default PostsForm;
+export default SearchForm;
