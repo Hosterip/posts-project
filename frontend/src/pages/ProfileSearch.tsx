@@ -1,9 +1,9 @@
-import SearchForm from "../../components/SearchForm.tsx";
+import SearchForm from "../components/SearchForm.tsx";
 import {useEffect, useState} from "react";
-import useInfinityScroll from "../../hooks/useInfinityScroll.tsx";
-import {fetchUserMany} from "../../API/user/fetchUserMany.ts";
+import useInfinityScroll from "../hooks/useInfinityScroll.tsx";
+import {fetchUserMany} from "../API/user/fetchUserMany.ts";
 import {Link} from "react-router-dom";
-import {IUser} from "../../share/interfaces/User.ts";
+import {IUser} from "../share/interfaces/User.ts";
 
 const ProfileSearch = () => {
     const { page, lastElementRef, setPage, setTotalPages } = useInfinityScroll()

@@ -1,6 +1,7 @@
 import {useUserStore} from "../../zustand/useUser.ts";
 import NavbarButton from "./NavbarButton.tsx";
 import {fetchLogout} from "../../API/auth/fetchLogout.ts";
+import NavbarRightSide from "./NavbarRightSide.tsx";
 
 const Navbar = () => {
     const {user, setUser} = useUserStore()
@@ -20,20 +21,7 @@ const Navbar = () => {
                 <NavbarButton to='/'>Posts</NavbarButton>
                 <NavbarButton to='/profiles'>Profiles</NavbarButton>
             </div>
-            <div>
-                {user
-                    ?
-                    <>
-                        <button onClick={logoutHandler} className='h-fit mx-4 px-2 border-b-4 border-red-600'>Logout</button>
-                        <NavbarButton to={`/profiles/${user.id}`}>Profile</NavbarButton>
-                    </>
-                    :
-                    <>
-                        <NavbarButton to='/register'>Sign-up</NavbarButton>
-                        <NavbarButton to='/login'>Sign-in</NavbarButton>
-                    </>
-                }
-            </div>
+            <NavbarRightSide logoutHandler={logoutHandler} user={user} />
         </nav>
     );
 };

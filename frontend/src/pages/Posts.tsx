@@ -1,45 +1,34 @@
 import {useUserStore} from "../zustand/useUser.ts";
-import {FormEvent, useEffect, useState} from "react";
-import {fetchPosts} from "../API/posts/fetchPosts.ts";
-import useInfinityScroll from "../hooks/useInfinityScroll.tsx"
 import PostList from "../components/Posts/PostList.tsx";
-import {IPost} from "../share/interfaces/IPost.ts";
 import SearchForm from "../components/SearchForm.tsx";
+import LoadingAndError from "../components/LoadingAndError.tsx";
+import NewPost from "../components/NewPost/NewPost.tsx";
+import usePosts from "../hooks/usePosts.tsx";
 
 const Posts = () => {
     const {user} = useUserStore()
-    const [posts, setPosts] = useState<IPost[] | []>([])
-    const [query, setQuery] = useState<string>('')
-    const [search, setSearch] = useState<string>('')
-    const {page, setTotalPages, setPage, lastElementRef, setIsLoading} = useInfinityScroll()
-
-    const handleSearch = (e: FormEvent<HTMLButtonElement | HTMLFormElement>) => {
-        e.preventDefault()
-        setPage(1)
-        setPosts([])
-        setQuery(search)
-    }
-
-    useEffect(() => {
-        setIsLoading(true)
-        fetchPosts(page, query)
-            .then(res => {
-                if (res) {
-                    setPosts([...posts, ...res.posts])
-                    setTotalPages(res.totalPages)
-                }
-            })
-            .catch((e) => {
-                console.error(e)
-            })
-    }, [page, query]);
+    const {
+        search,
+        setSearch,
+        handleSearch,
+        isLoading,
+        posts,
+        error,
+        lastElementRef
+    } = usePosts()
 
     return (
         <div className='m-5'>
-            {user && <h1 className='text-zinc-100 text-2xl font-bold'>Hello {user.username}!</h1>}
-            <SearchForm search={search} setSearch={setSearch} handleSearch={handleSearch}/>
+            {user &&
+                <div className='flex justify-between'>
+                    <h1 className='text-zinc-100 text-2xl font-bold'>Hello {user.username}!</h1>
+                    <NewPost/>
+                </div>
+            }
+            <SearchForm search={search} setSearch={setSearch} handleRequest={handleSearch}/>
+            <LoadingAndError error={error} loading={isLoading} />
             <div>
-                {posts.length
+                {posts.length && !isLoading && !error
                     ?
                     <PostList posts={posts} lastElementRef={lastElementRef}/>
                     :

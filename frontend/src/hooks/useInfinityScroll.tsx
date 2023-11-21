@@ -20,6 +20,7 @@ const useInfinityScroll = () => {
 
     return {
         lastElementRef,
+        isLoading,
         setIsLoading,
         setTotalPages,
         setPage,

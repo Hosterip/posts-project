@@ -1,17 +1,19 @@
 import Modal from "../../UI/modal/Modal.tsx";
 import {useState} from "react";
 import {fetchCreatePost} from "../../API/posts/fetchCreatePost.ts";
+import LoadingAndError from "../LoadingAndError.tsx";
+import NewPostInput from "./NewPostInput.tsx";
 
 const NewPost = () => {
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const [title, setTitle] = useState('')
     const [body, setBody] = useState('')
+    const [error, setError] = useState(false)
 
     const resetStates = () => {
         setIsOpen(false)
         setTitle('')
         setBody('')
-        console.log('RESETED')
     }
 
     const confirmCallback = async () => {
@@ -26,31 +28,24 @@ const NewPost = () => {
             })
             .catch((e) => {
                 console.error(e)
-                resetStates()
+                setError(true)
             })
     }
 
     console.log(title, body)
     return (
         <>
-            <button onClick={() => setIsOpen(true)}>Create a new post</button>
+            <button
+                className='bg-blue-500 rounded p-2'
+                onClick={() => setIsOpen(true)}
+            >
+                Create a new post
+            </button>
             <Modal setIsOpen={setIsOpen} isOpen={isOpen} confirmCallback={confirmCallback}>
                 <form className='flex flex-col gap-3 py-3'>
-                    <label className='text-xl text-slate-900 flex justify-between w-full'>
-                        Title: <input
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        className='rounded p-1  text-slate-700'
-                        type="text"
-                    />
-                    </label>
-                    <label className='text-xl text-slate-900 flex justify-between w-full' >
-                        Body: <input
-                        value={body}
-                        onChange={(e) => setBody(e.target.value)}
-                        className='rounded p-1 text-slate-700'
-                        type="text"/>
-                    </label>
+                    <NewPostInput value={title} setValue={setTitle} label={'Title'} />
+                    <NewPostInput value={body} setValue={setBody} label={'Body'} />
+                    <LoadingAndError error={error} errorMsg={'Something went wrong'} loading={false}/>
                 </form>
             </Modal>
         </>

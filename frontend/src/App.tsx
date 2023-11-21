@@ -5,8 +5,9 @@ import {useUserStore} from "./zustand/useUser.ts";
 import {fetchUser} from "./API/user/fetchUser.ts";
 import Auth from "./pages/Auth/Auth.tsx";
 import Navbar from "./components/Navbar/Navbar.tsx";
-import ProfileSearch from "./pages/ProfileSearch/ProfileSearch.tsx";
+import ProfileSearch from "./pages/ProfileSearch.tsx";
 import Profile from "./pages/Profile.tsx";
+import LoadingAndError from "./components/LoadingAndError.tsx";
 
 const App = () => {
     const [loading, setLoading] = useState<boolean>(true)
@@ -19,6 +20,9 @@ const App = () => {
                     setUser(res)
                 }
             })
+            .catch(e => {
+                console.error(e)
+            })
             .finally(() => setLoading(false))
     }, []);
 
@@ -27,7 +31,7 @@ const App = () => {
             <Navbar />
             {loading
                 ?
-                <h1>Loading</h1>
+                <LoadingAndError error={false} loading={loading} />
                 :
                 <Routes>
                     <Route path={'/'} element={ <Posts/> }/>
