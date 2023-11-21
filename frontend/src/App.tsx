@@ -3,7 +3,7 @@ import Posts from "./pages/Posts.tsx";
 import {useEffect, useState} from "react";
 import {useUserStore} from "./zustand/useUser.ts";
 import {fetchUser} from "./API/auth/fetchUser.ts";
-import Auth from "./components/Auth/Auth.tsx";
+import Auth from "./pages/Auth/Auth.tsx";
 import Navbar from "./components/Navbar/Navbar.tsx";
 
 export interface IUser {
