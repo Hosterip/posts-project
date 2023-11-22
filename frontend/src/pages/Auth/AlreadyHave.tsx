@@ -10,7 +10,7 @@ const AlreadyHave: FC<IAlreadyHave> = ({type}) => {
     const opposite = () => type === 'register' ? 'Login' : 'Register'
 
     return (
-        <p className='mt-4'>Already have an account?
+        <p className='mt-4'>{type === 'register' ? 'Already have an account? ' : 'Wanna create an account? '}
             <Link
                 className='text-blue-300'
                 to={`/${opposite()}`}

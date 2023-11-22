@@ -21,10 +21,14 @@ const useAuth = (type: 'login' | 'register') => {
         setError({...error, isError: false})
     }
 
-    const errorHandle = () => {
-        type === 'register'
-            ? setError({errorMsg: 'Username is taken, please try other one', isError: true})
-            : setError({errorMsg: 'Username or password is incorrect', isError: true})
+    const errorHandle = (status: number) => {
+        if(status === 401) {
+            type === 'register'
+                ? setError({errorMsg: 'Username is taken, please try other one', isError: true})
+                : setError({errorMsg: 'Username or password is incorrect', isError: true})
+        } else {
+            setError({errorMsg: 'Something went wrong, we are sorry', isError: true})
+        }
     }
     const handleAuth = async (e: FormEvent<HTMLButtonElement>) => {
         e.preventDefault()
@@ -44,8 +48,8 @@ const useAuth = (type: 'login' | 'register') => {
         await fetchAuth(bodyObject, type)
             .then(res => {
                 console.log(res)
-                if(res.status !== 200) {
-                    throw new Error('Something went wrong')
+                if(res.status === 401) {
+                    errorHandle(401)
                 }
                 resetStates()
                 return res.json()
@@ -57,7 +61,7 @@ const useAuth = (type: 'login' | 'register') => {
             })
             .catch(e => {
                 console.error(e)
-                errorHandle()
+                errorHandle(500)
             })
     }
 

@@ -30,7 +30,7 @@ const Profile = () => {
     }, [id]);
     return (
         <div className='m-5'>
-            {userById &&
+            {userById ?
                 <div>
                     <div className='flex justify-between'>
                         <h1 className='text-4xl text-teal-50'>{userById.username}</h1>
@@ -38,6 +38,7 @@ const Profile = () => {
                     </div>
                     <PostList posts={userById.posts} lastElementRef={null} />
                 </div>
+                : null
             }
             <LoadingAndError error={error} loading={loading} />
         </div>

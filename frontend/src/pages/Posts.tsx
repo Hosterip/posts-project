@@ -19,11 +19,12 @@ const Posts = () => {
 
     return (
         <div className='m-5'>
-            {user &&
+            {user ?
                 <div className='flex justify-between'>
                     <h1 className='text-zinc-100 text-2xl font-bold'>Hello {user.username}!</h1>
                     <NewPost/>
                 </div>
+                : null
             }
             <SearchForm search={search} setSearch={setSearch} handleRequest={handleSearch}/>
             <LoadingAndError error={error} loading={isLoading} />
@@ -33,7 +34,7 @@ const Posts = () => {
                     <PostList posts={posts} lastElementRef={lastElementRef}/>
                     :
                     <>
-                    {!isLoading && ! error && <h1 className='text-blue-300 text-3xl'>Posts were not found</h1>}
+                        {!isLoading && ! error && <h1 className='text-blue-300 text-3xl'>Posts were not found</h1>}
                     </>
                 }
             </div>
