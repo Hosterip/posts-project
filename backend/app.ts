@@ -5,14 +5,15 @@ import passport from "passport";
 import express from 'express'
 import session from 'express-session';
 import {authRoutes} from "./routes/authRoutes";
-import cookieParser from 'cookie-parser'
 import {postsRoutes} from "./routes/postsRoutes";
 import {userRoutes} from "./routes/userRoutes";
+import {configDotenv} from "dotenv";
 const app = express()
 
-app.use(cookieParser('a santa at nasa'))
+configDotenv()
+
 app.use(cors({
-    origin: 'http://localhost:5173',
+    origin: 'http://localhost:5174',
     credentials: true
 }))
 app.use(express.json())
@@ -23,7 +24,7 @@ app.use(
         cookie: {
             maxAge: 24 * 60 * 60 * 1000, // ms
         },
-        secret: 'a santa at nasa',
+        secret: process.env.SECRET || 'a santa at nasa',
         resave: true,
         saveUninitialized: true,
         store: new PrismaSessionStore(

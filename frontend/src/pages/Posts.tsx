@@ -28,11 +28,13 @@ const Posts = () => {
             <SearchForm search={search} setSearch={setSearch} handleRequest={handleSearch}/>
             <LoadingAndError error={error} loading={isLoading} />
             <div>
-                {posts.length && !isLoading && !error
+                {posts.length
                     ?
                     <PostList posts={posts} lastElementRef={lastElementRef}/>
                     :
-                    <h1 className='text-blue-300 text-3xl'>Posts were not found</h1>
+                    <>
+                    {!isLoading && ! error && <h1 className='text-blue-300 text-3xl'>Posts were not found</h1>}
+                    </>
                 }
             </div>
         </div>
