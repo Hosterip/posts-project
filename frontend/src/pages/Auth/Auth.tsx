@@ -3,6 +3,7 @@ import {firstLetterCapital} from "../../share/helpers/firstLetterCapital.ts";
 import AuthForm from "./AuthForm.tsx";
 import useAuth from "../../hooks/useAuth.tsx";
 import AlreadyHave from "./AlreadyHave.tsx";
+import LoadingAndError from "../../components/LoadingAndError.tsx";
 
 interface IAuth {
     typeOfAuth: 'register' | 'login'
@@ -27,7 +28,7 @@ const Auth: FC<IAuth> = ({typeOfAuth}) => {
                         username={username} password={password}
                         setUsername={setUsername} setPassword={setPassword}
                     />
-                    {error.isError && <h1 className='text-base text-red-500'>{error.errorMsg}</h1>}
+                    <LoadingAndError error={error.isError} errorMsg={error.errorMsg} loading={false}/>
                     <button
                         className='w-fit bg-zinc-50 text-slate-800 rounded py-0.5 px-3 my-1'
                         onClick={handleAuth}

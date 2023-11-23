@@ -9,7 +9,7 @@ export function authRegisterUser (req: Request, res: Response) {
     const {username, password} = req.body
     if (!(username.trim() && password.trim())) {
         res.status(400)
-        res.end()
+        res.send('Bad request')
         return
     }
     const {hash, salt} = genHashSalt(password)
@@ -31,7 +31,7 @@ export function authRegisterUser (req: Request, res: Response) {
         .catch(e => {
             console.error(e)
             res.status(400)
-            res.end()
+            res.send('Bad request')
         })
 }
 

@@ -13,7 +13,7 @@ const useAuth = (type: 'login' | 'register') => {
     const navigate = useNavigate()
 
     // Getting user from global state
-    const { user, setUser } = useUserStore()
+    const {user, setUser} = useUserStore()
 
     const resetStates = () => {
         setUsername('')
@@ -22,10 +22,10 @@ const useAuth = (type: 'login' | 'register') => {
     }
 
     const errorHandle = (status: number) => {
-        if(status === 401) {
-            type === 'register'
-                ? setError({errorMsg: 'Username is taken, please try other one', isError: true})
-                : setError({errorMsg: 'Username or password is incorrect', isError: true})
+        if (status === 401) {
+            setError({errorMsg: 'Username or password is incorrect', isError: true})
+        } else if (status === 400) {
+            setError({errorMsg: 'Username is taken, please try other one', isError: true})
         } else {
             setError({errorMsg: 'Something went wrong, we are sorry', isError: true})
         }
@@ -34,7 +34,7 @@ const useAuth = (type: 'login' | 'register') => {
         e.preventDefault()
 
         // Validation
-        if(!(username.trim() && username.trim())) {
+        if (!(username.trim() && username.trim())) {
             setError({errorMsg: 'Please input proper username and password', isError: true})
             return
         }
@@ -44,29 +44,30 @@ const useAuth = (type: 'login' | 'register') => {
             password: password
         }
 
-        // POST request to login user in or register user
+        // POST request to sign in user in or register user
         await fetchAuth(bodyObject, type)
             .then(res => {
-                console.log(res)
-                if(res.status === 401) {
-                    errorHandle(401)
+                if (res.status === 400 || res.status === 401) {
+                    errorHandle(res.status)
+                    return res
                 }
                 resetStates()
                 return res.json()
             })
             .then(res => {
-                if(res.username && res.id) {
+                if (res.username && res.id) {
                     setUser(res)
                 }
             })
             .catch(e => {
                 console.error(e)
+                console.log(e)
                 errorHandle(500)
             })
     }
 
     useEffect(() => {
-        if(user) {
+        if (user) {
             navigate('/')
         }
     }, [user]);
