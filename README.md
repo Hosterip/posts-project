@@ -17,6 +17,8 @@ add .env file in backend folder with content:
 `DATABASE_URL="file:./dev.db"`
 and `SECRET=YourSessionSecretHere`
 
+also make sure that in app.ts file in cors middleware origin is same as link at which client is running
+
 #
 
 `npm install`
