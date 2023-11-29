@@ -9,7 +9,7 @@ const Navbar = () => {
     const logoutHandler = () => {
         fetchLogout()
             .then(res => {
-                if(res.status === 200) {
+                if(res.status === 200 || res.status === 201) {
                     setUser(null)
                 }
             })

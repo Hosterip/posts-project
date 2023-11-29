@@ -22,10 +22,10 @@ const useAuth = (type: 'login' | 'register') => {
     }
 
     const errorHandle = (status: number) => {
-        if (status === 401) {
-            setError({errorMsg: 'Username or password is incorrect', isError: true})
-        } else if (status === 400) {
-            setError({errorMsg: 'Username is taken, please try other one', isError: true})
+        if (status === 401 || status === 400) {
+            type === 'register'
+                ? setError({errorMsg: 'Username is taken, please try other one', isError: true})
+                : setError({errorMsg: 'Username or password is incorrect', isError: true})
         } else {
             setError({errorMsg: 'Something went wrong, we are sorry', isError: true})
         }
